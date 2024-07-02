@@ -38,12 +38,13 @@ variable "desired_capacity" {
   type        = number
 }
 
-variable "key_name" {
-  description = "SSH Key Pair name"
-  type        = string
-}
-
 variable "target_group_arns" {
   description = "List of target group ARNs for the ASG"
   type        = list(string)
+}
+
+# 원하는 용량지정
+variable "desired_size" {
+  description = "ASG Desired_Capacity"
+  type        = string
 }
