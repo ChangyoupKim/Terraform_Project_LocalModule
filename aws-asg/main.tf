@@ -24,6 +24,7 @@ resource "aws_launch_configuration" "aws_asg_launch" {
   }
 }
 
+# Desired_Size 지정
 resource "aws_autoscaling_group" "aws_asg" {
   name                 = "${var.name}-asg"
   launch_configuration = aws_launch_configuration.aws_asg_launch.name
@@ -31,7 +32,7 @@ resource "aws_autoscaling_group" "aws_asg" {
   max_size             = var.max_size
   desired_capacity     = var.desired_capacity
   vpc_zone_identifier  = var.private_subnets
-  target_group_arns    = var.target_group_arns
+  target_group_arns    = [data.terraform_remote_state.alb_remote_data.outputs.ALB_TG] # (Update)
   health_check_type    = "ELB"
 
   tag {
@@ -89,23 +90,4 @@ resource "aws_cloudwatch_metric_alarm" "scale_in_alarm" {
   }
 
   alarm_actions = [aws_autoscaling_policy.scale_in_policy.arn]
-}
-
-# Desired_Size 지정
-resource "aws_autoscaling_group" "aws_asg" {
-  name                 = "${var.name}-asg"
-  launch_configuration = aws_launch_configuration.aws_asg_launch.name
-  desired_capacity     = var.desired_capacity
-  min_size             = var.min_size
-  max_size             = var.max_size
-  vpc_zone_identifier  = var.private_subnets
-
-  target_group_arns = [data.terraform_remote_state.alb_remote_data.outputs.ALB_TG] # (Update)
-  health_check_type = "ELB"
-
-  tag {
-    key                 = "Name"
-    value               = "${var.name}-Terraform_Instance"
-    propagate_at_launch = true
-  }
 }

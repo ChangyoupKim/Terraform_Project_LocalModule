@@ -33,18 +33,17 @@ variable "HTTP_HTTPS_SG_ID" {
   type        = string
 }
 
-variable "desired_capacity" {
-  description = "Desired capacity of the ASG"
-  type        = number
-}
-
 variable "target_group_arns" {
-  description = "List of target group ARNs for the ASG"
+  description = "A list of target group ARNs"
   type        = list(string)
 }
 
-# 원하는 용량지정
-variable "desired_size" {
-  description = "ASG Desired_Capacity"
+variable "desired_capacity" {
+  description = "The desired number of instances"
+  type        = number
+}
+
+variable "key_name" {
+  description = "The name of the key pair"
   type        = string
 }
