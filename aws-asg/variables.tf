@@ -19,16 +19,31 @@ variable "name" {
 }
 
 variable "private_subnets" {
-  description = "private_Subnets"
+  description = "List of private subnets for the ASG"
   type        = list(string)
 }
 
 variable "SSH_SG_ID" {
-  description = "SSH_SG_ID"
+  description = "Security Group ID for SSH access"
   type        = string
 }
 
 variable "HTTP_HTTPS_SG_ID" {
-  description = "HTTP_HTTPS_SG_ID"
+  description = "Security Group ID for HTTP/HTTPS access"
   type        = string
+}
+
+variable "desired_capacity" {
+  description = "Desired capacity of the ASG"
+  type        = number
+}
+
+variable "key_name" {
+  description = "SSH Key Pair name"
+  type        = string
+}
+
+variable "target_group_arns" {
+  description = "List of target group ARNs for the ASG"
+  type        = list(string)
 }
